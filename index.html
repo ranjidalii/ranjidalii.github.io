@@ -234,22 +234,46 @@
         </div>
         <div class="row justify-content-center">
           <div class="col-md-6">
-            <div class="alert alert-success alert-dismissible fade show d-none my-alert text-center" role="alert">
-              <strong>Terima Kasih</strong> Pesan Anda sudah kami terima.
+            <div class="alert alert-success alert-dismissible fade show d-none my-alert mt-2" role="alert">
+              <strong>Thank you</strong> we have received your message.
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <form name="contact-form">
               <div class="mb-3">
                 <label for="name" class="form-label">Full Name</label>
-                <input type="text" class="form-control" id="name" aria-describedby="name" name="name" />
+                <input type="text" class="form-control name" id="name" aria-describedby="name" name="name" />
+                <div class="alert alert-warning d-flex align-items-center mt-1 d-none alert-name" role="alert">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                    <path
+                      d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                    />
+                  </svg>
+                  <div>Please insert your name</div>
+                </div>
               </div>
               <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" aria-describedby="email" name="email" />
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control email" id="email" aria-describedby="email" name="email" />
+                <div class="alert alert-warning d-flex align-items-center mt-1 d-none alert-email" role="alert">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                    <path
+                      d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                    />
+                  </svg>
+                  <div>Please insert your e-mail addres</div>
+                </div>
               </div>
               <div class="mb-3">
-                <label for="message" class="form-label">Write your message</label>
-                <textarea class="form-control" id="message" rows="3" name="message"></textarea>
+                <label for="message" class="form-label">Write Message</label>
+                <textarea class="form-control message" id="message" rows="3" name="message"></textarea>
+                <div class="alert alert-warning d-flex align-items-center mt-1 d-none alert-message" role="alert">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                    <path
+                      d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                    />
+                  </svg>
+                  <div>Please write your message</div>
+                </div>
               </div>
               <button type="submit" class="btn btn-primary btn-kirim">Send</button>
               <button class="btn btn-primary btn-loading d-none" type="button" disabled>
@@ -305,29 +329,54 @@
 
     <script>
       const scriptURL = "https://script.google.com/macros/s/AKfycbzh3znmxDcwx49Gsi6yn7Y6BIDn1Pw_dU45ROjFRF_NLoGHbllmX-7zgPqR8ueER5Xp9w/exec";
+
       const form = document.forms["contact-form"];
       const btnKirim = document.querySelector(".btn-kirim");
       const btnLoading = document.querySelector(".btn-loading");
       const myAlert = document.querySelector(".my-alert");
 
+      //alert
+      const alertName = document.querySelector(".alert-name");
+      const alertEmail = document.querySelector(".alert-email");
+      const alertMessage = document.querySelector(".alert-message");
+
+      //input
+      const name = document.getElementById("name");
+      const email = document.getElementById("email");
+      const message = document.getElementById("message");
+
       form.addEventListener("submit", (e) => {
         e.preventDefault();
-        // ketika tombol submit diklik
-        // tampilkan tombol loading, hilangkan tombol kirim
-        btnLoading.classList.toggle("d-none");
-        btnKirim.classList.toggle("d-none");
-        fetch(scriptURL, { method: "POST", body: new FormData(form) })
-          .then((response) => {
-            // tampilkan tombol kirim, hilangkan tombol loading
-            btnLoading.classList.toggle("d-none");
-            btnKirim.classList.toggle("d-none");
-            // tampilkan alert
-            myAlert.classList.toggle("d-none");
-            // reset form
-            form.reset();
-            console.log("Success!", response);
-          })
-          .catch((error) => console.error("Error!", error.message));
+        if (name.value === "") {
+          // tampilkan alert name
+          alertName.classList.toggle("d-none");
+        } else if (email.value === "") {
+          // tampilkan alert email
+          alertEmail.classList.toggle("d-none");
+        } else if (message.value === "") {
+          // tampilkan alert message
+          alertMessage.classList.toggle("d-none");
+        } else {
+          // ketika tombol submit diklik
+          // tampilkan tombol loading, hilangkan tombol kirim
+          btnLoading.classList.toggle("d-none");
+          btnKirim.classList.toggle("d-none");
+          fetch(scriptURL, { method: "POST", body: new FormData(form) })
+            .then((response) => {
+              // tampilkan tombol kirim, hilangkan tombol loading
+              btnLoading.classList.toggle("d-none");
+              btnKirim.classList.toggle("d-none");
+              // tampilkan alert
+              myAlert.classList.toggle("d-none");
+              // reset form
+              alertName.classList.toggle("d-none");
+              alertEmail.classList.toggle("d-none");
+              alertMessage.classList.toggle("d-none");
+              form.reset();
+              console.log("Success!", response);
+            })
+            .catch((error) => console.error("Error!", error.message));
+        }
       });
     </script>
   </body>
